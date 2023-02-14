@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/whitesmoke"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ></ImageView>
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/black"
+        android:hint="請輸入數字"></EditText>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="5"
+        android:columnCount="4"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/btn1" android:text="1" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn2" android:text="2" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn3" android:text="3" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/divide" android:text="/" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn4" android:text="4" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn5" android:text="5" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn6" android:text="6" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/multiply" android:text="*" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn7" android:text="7" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn8" android:text="8" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn9" android:text="9" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/minus" android:text="-" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/point" android:text="." android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn0" android:text="0" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/clear" android:text="C" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/add" android:text="+" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/del" android:text="DEL" android:layout_margin="2dp"></Button>
+        <Button android:id="@+id/btn_result" android:text="="
+            android:layout_margin="2dp"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"></Button>
+
+
+
+
+    </GridLayout>
+
+
+
+</LinearLayout>
