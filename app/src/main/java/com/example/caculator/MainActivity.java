@@ -15,10 +15,14 @@ import com.example.caculator.utill.Oper;
 import com.example.caculator.utill.Rule;
 
 import java.util.Queue;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityMainBinding binding;
+    //監測是否擁有過小數點
+    private boolean hasDot = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,55 +70,93 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn7:
             case R.id.btn8:
             case R.id.btn9:
+                input.append(((Button)v).getText());
+                binding.edit.setText(input.toString());
+                break;
             case R.id.divide:
             case R.id.multiply:
             case R.id.minus:
             case R.id.add:
-                input.append(((Button)v).getText());
-                binding.edit.setText(input.toString());
+                if (input.length()!=0  &&
+                        !input.substring(input.length()-1).equals(".") &&
+                        !input.substring(input.length()-1).equals("+") &&
+                        !input.substring(input.length()-1).equals("-") &&
+                        !input.substring(input.length()-1).equals("*") &&
+                        !input.substring(input.length()-1).equals("/")
+                ){
+                    input.append(((Button)v).getText());
+                    binding.edit.setText(input.toString());
+                    hasDot = false;
+                }
                 break;
             case R.id.point:
-                if (input.substring(input.length()-1)!="." &&
-                        input.substring(input.length()-1)!=" " && input.length()!=0)
-                {
-                    input = input.append(("."));
+                if (!hasDot && input.length()!=0 &&
+                        !input.substring(input.length()-1).equals(".") &&
+                        !input.substring(input.length()-1).equals("+") &&
+                        !input.substring(input.length()-1).equals("-") &&
+                        !input.substring(input.length()-1).equals("*") &&
+                        !input.substring(input.length()-1).equals("/") &&
+                        !input.substring(input.length()-1).equals(" ")) {
+                    input.append(".");
                     binding.edit.setText(input.toString());
+                    hasDot = true;
                 }
                 break;
             case R.id.clear:
                 binding.edit.setText("");
+                hasDot = false;
                 break;
             case R.id.del:
-                binding.edit.setText(input.substring(0,input.length()-1));
+                if (input.length() > 0 && input.substring(input.length()-1).equals(".")) {
+                    hasDot = false;
+                }
+                if (input.length() > 0 ) {
+                binding.edit.setText(input.substring(0,input.length()-1));}
                 break;
             case R.id.btn_result:
                 getResult();
                 break;
-
         }
-        Log.d("ddddd", "edit text: "+binding.edit.getText().toString());
     }
 
     private void getResult() {
         CharFactory charFactory= new  CharFactory();
         String input = binding.edit.getText().toString();
-        if(input.length()!=0 && input!=null){
-            String[] strings = input.split("");
-            for (String s : strings){
-                charFactory.saveChar(s);
-            }
-            charFactory.endQueue();
-            Queue<Rule> queue = charFactory.getQueue();
-            Log.d("ddddd", "queue: "+queue);
-            Rule num1 = (Num)queue.poll();
-            Rule oper = (Oper)queue.poll();
-            Rule num2 = (Num)queue.poll();
-            Double dnum1= ((Num)num1).getDoubble();
-            Double dnum2= ((Num)num2).getDoubble();
-            Double result = ((Oper)oper).count(dnum1,dnum2);
-            binding.edit.setText(result.toString());
+        //忘記正則了
+        String[] strings = input.split("(?<=[*/+-])|(?=[*/+-])");
+        for (String s : strings){
+            charFactory.saveChar(s);
+        }
+        charFactory.endQueue();
+        Queue<Rule> queue = charFactory.getQueue();
 
+        //忘記stack的用法
+        Stack<Double> numStack = new Stack<>();
+        Stack<Oper> operStack = new Stack<>();
+
+        while (!queue.isEmpty()) {
+            Rule rule = queue.poll();
+            if (rule instanceof Num) {
+                numStack.push(((Num) rule).getDoubble());
+            } else if (rule instanceof Oper) {
+                Oper oper = (Oper) rule;
+                while (!operStack.empty() && operStack.peek().getPriority() >= oper.getPriority()) {
+                    double num2 = numStack.pop();
+                    double num1 = numStack.pop();
+                    numStack.push(operStack.pop().count(num1, num2));
+                }
+                operStack.push(oper);
+            }
         }
 
+        while (!operStack.empty()) {
+            double num2 = numStack.pop();
+            double num1 = numStack.pop();
+            numStack.push(operStack.pop().count(num1, num2));
+        }
+
+        double result = numStack.pop();
+        binding.edit.setText(Double.toString(result));
     }
-}
+
+    }

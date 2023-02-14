@@ -1,33 +1,49 @@
 package com.example.caculator.utill;
 
-public class Oper implements Rule{
+import android.util.Log;
 
-    String str="";
+public class Oper implements Rule {
 
-    public Oper(String str){
+    private String str;
+    private int priority;
+
+    public Oper(String str) {
         this.str = str;
+        switch (str) {
+            case "+":
+            case "-":
+                priority = 1;
+                break;
+            case "*":
+            case "/":
+                priority = 2;
+                break;
+            default:
+                priority = 0;
+                break;
+        }
     }
 
-    public Double  count(Double num1,Double num2) {
-    if(str.equals("+")){
-        return num1+num2;
+    public double count(double num1, double num2) {
+        if (str.equals("+")) {
+            return num1 + num2;
+        } else if (str.equals("-")) {
+            return num1 - num2;
+        } else if (str.equals("*")) {
+            return num1 * num2;
+        } else if (str.equals("/")) {
+            return num1 / num2;
+        } else {
+            return 404.0;
+        }
     }
-    else if (str.equals("-")){
-        return num1-num2;
+
+    public int getPriority() {
+        return priority;
     }
-    else if(str.equals("/")){
-        return num1/num2;
-    }
-    else if(str.equals("*")){
-        return num1*num2;
-    }
-    else {
-        return 404.0;
-    }
-    };
 
     @Override
-    public Rule getRule() {
-        return null;
+    public void printString() {
+        Log.d("ddddd", "printString:queue " + str);
     }
 }
