@@ -1,4 +1,4 @@
-package com.example.caculator.utill;
+package com.example.caculator.util;
 
 public interface Rule {
     void printString();

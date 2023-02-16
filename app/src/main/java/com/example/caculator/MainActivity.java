@@ -3,16 +3,15 @@ package com.example.caculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.caculator.databinding.ActivityMainBinding;
-import com.example.caculator.utill.CharFactory;
-import com.example.caculator.utill.Num;
-import com.example.caculator.utill.Oper;
-import com.example.caculator.utill.Rule;
+import com.example.caculator.util.CharFactory;
+import com.example.caculator.util.Num;
+import com.example.caculator.util.Oper;
+import com.example.caculator.util.Rule;
 
 import java.util.Queue;
 import java.util.Stack;
@@ -135,11 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Stack<Oper> operStack = new Stack<>();
 
         while (!queue.isEmpty()) {
+            //拿出每個切好的運算位 運算符號
             Rule rule = queue.poll();
             if (rule instanceof Num) {
+                //是數字放進去numStack
                 numStack.push(((Num) rule).getDoubble());
             } else if (rule instanceof Oper) {
                 Oper oper = (Oper) rule;
+                //是運算符號先放第一個符號進去operStack,第二個開始比較從queue取出來的優先度,優先度高的就
                 while (!operStack.empty() && operStack.peek().getPriority() >= oper.getPriority()) {
                     double num2 = numStack.pop();
                     double num1 = numStack.pop();
