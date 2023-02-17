@@ -1,8 +1,7 @@
-package com.example.caculator;
+package com.example.caculator.ViewModelTest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.caculator.R;
 
 public class ViewModelTestActivity extends AppCompatActivity {
     MyViModel myViModel;
