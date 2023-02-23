@@ -13,7 +13,7 @@ public class LoginActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        attachView(new LoingPresenter());
+        attachPresenter(new LoingPresenter());
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,4 +35,6 @@ public class LoginActivity
     public void showSuccessMes() {
 
     }
+
+
 }

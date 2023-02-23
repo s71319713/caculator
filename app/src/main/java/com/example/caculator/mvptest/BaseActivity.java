@@ -9,7 +9,7 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter>
     protected T mPresenter;
 
 
-    public void attachView(T mPresenter){
+    public void attachPresenter(T mPresenter){
         this.mPresenter = mPresenter;
         //把接口傳入
         mPresenter.attachView(this);
