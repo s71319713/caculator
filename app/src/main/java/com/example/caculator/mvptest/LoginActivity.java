@@ -13,7 +13,7 @@ public class LoginActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        attachPresenter(new LoingPresenter());
+//        attachPresenter(new LoingPresenter());
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,4 +37,8 @@ public class LoginActivity
     }
 
 
+    @Override
+    public LoingPresenter createPresenter() {
+        return new LoingPresenter();
+    }
 }
